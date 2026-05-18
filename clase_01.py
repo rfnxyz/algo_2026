@@ -1,3 +1,4 @@
+# Módulos con minúscula. Clases con Mayústcula
 
 print("hola mundo", "desde python")
 
@@ -145,7 +146,7 @@ from math import sqrt as raiz_cuadrada, factorial
 from mi_modulo import suma, diferencia
 
 print(raiz_cuadrada(16))
-print(suma(5, '3'))
+print(suma(5, 3))
 print(factorial())
 
 
@@ -166,53 +167,65 @@ dic[45] = 'Ana'
 print('editado desde github web')
 print('editado desde github web cambio 2')
 
-##################################
+####################################################################
+####################################################################
+####################################################################
+####################################################################
+####################################################################
 
 # CLASES
 
 class MiClase:
 
-    # name, size = None, None
+    ### name, size = None, None
 
-    # Método constructor
+    # Método constructor, inicializador de la clase
     def __init__(self, name: str, size: int = None):
-        self.name = name
-        self.size = size
+        self.__name = name
+        self.__size = size
 
-    def saludar(self):
+    # Llamado
+    def saludar(self):          # self, representa el objeto que la clase va a llamar
         print(self)
         print(f"hola, me llamo {self.__name}")
     
     # Privado
-    def get_name(self):
+    def get_name(self):                 # Getter
         return self.__name
 
-    def set_name(self, new_name: str):
+    def set_name(self, new_name: str):  # Setter
         self.__name = new_name
 
+# Objetos distintos, marca identidad (POO) [f_1, f_2, ...]
+# En una clase, se puede tener un conjunto de atributos que permitan definir algo
 f_1 = MiClase("Pepito")
-# f_1.name = "Pepito"
+### f_1.name = "Pepito"
 
 f_2 = MiClase("Ricardo")
-# f_2.name = "Ricardo"
+### f_2.name = "Ricardo"
 
 f_3 = MiClase("Cory")
-# f_3.name = "Cory"
+### f_3.name = "Cory"
 
 # Privado
-
-
 print(f_1.get_name())
 f_1.saludar()
 f_2.saludar()
 f_3.saludar()
 
+# Datos primitivos (mutables, estandar, valores)
 num_1 = 10
 num_2 = 10
 num_3 = 11
 
+# Objetos mutables (poseen identidad)
+    # Mismo resultado, apuntan al mismo espacio de memoria (f_1)
 print(f_1 == f_2)
 print(f_1 == f_3)
+    # Dirección de memoria (f_1), dentro de la variable 'name'
+### print(f_1.name == f_2.name)
+### print(f_1.name == f_3.name)
+
 
 print(f_1.name)
 print(f_1)
