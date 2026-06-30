@@ -1,5 +1,4 @@
 from random import randint
-
 from queue_ import Queue
 
 queue_numbers = Queue()

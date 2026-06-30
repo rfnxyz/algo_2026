@@ -197,7 +197,9 @@ class MiClase:
         self.__name = new_name
 
 # Objetos distintos, marca identidad (POO) [f_1, f_2, ...]
+# Cada obj. es único por más que sus atributos sean iguales
 # En una clase, se puede tener un conjunto de atributos que permitan definir algo
+# Por más que f_1 y f_2 tengan lo mismo, son dos copias distintas
 f_1 = MiClase("Pepito")
 ### f_1.name = "Pepito"
 
@@ -213,18 +215,18 @@ f_1.saludar()
 f_2.saludar()
 f_3.saludar()
 
-# Datos primitivos (mutables, estandar, valores)
+# Datos primitivos (mutables, estandar, son valores)
 num_1 = 10
 num_2 = 10
 num_3 = 11
 
-# Objetos mutables (poseen identidad)
+# Objetos mutables (poseen identidad propia)
     # Mismo resultado, apuntan al mismo espacio de memoria (f_1)
 print(f_1 == f_2)
 print(f_1 == f_3)
     # Dirección de memoria (f_1), dentro de la variable 'name'
 ### print(f_1.name == f_2.name)
-### print(f_1.name == f_3.name)
+### print(f_1.name == f_3.name
 
 
 print(f_1.name)
