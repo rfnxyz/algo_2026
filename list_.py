@@ -13,7 +13,7 @@ class List(list):               # SELF es list (la lista con los elementos)
         for element in self:
             print(element)
     
-    def search(self, search_value: Any):    # Método búsqueda, chequear si existe
+    def search(self, search_value: Any, criterion: str = None) -> Optional[int]:    # Método búsqueda, chequear si existe
         # Tener en cuenta que la lista debe estar ordenada
         self.sort_by_criterion(key_criterion=criterion)
         search_criterion = self.__CRITERION_FUNCTION.get(criterion)
@@ -33,9 +33,9 @@ class List(list):               # SELF es list (la lista con los elementos)
 
             value = search_criterion(self[middle]) if search_criterion else self[middle]
 
-            if value.nom == search_value:   # Si el buscado es el medio o distinto
+            if value == search_value:   # Si el buscado es el medio o distinto
                 return middle
-            elif value.nom < search_value:
+            elif value < search_value:
                 start = middle + 1
             else:
                 end = middle -1
