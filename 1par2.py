@@ -5,49 +5,107 @@ from super_heroes_data import superheroes
 
 # Listado ordenado de manera ascendente (A-Z) por nombre de los personajes
 
-#def orden_alfabetico_asc(listado):
-#    self = List()
-#    self.sort_by_criterion(name)
+def orden_alfabetico_asc(listado):
+    print("listado por nombre:")
+    orden = sorted(listado, key=lambda h: h["name"])
+    for h in orden:
+        print(f"{h["name"]}")
 
+# buscar the thing y rocket raccoon
 def busqueda_thing_raccoon(listado):
-    for i in range(1, len(listado)):
-        if listado[i]["name"] == "The Thing":
-            print(f"{listado[i]["name"]} se ubica en la posición {i}")
-        if listado[i]["name"] == "Rocket Raccoon":
-            print(f"{listado[i]["name"]} se ubica en la posición {i}")
-        
+    print("posicion thing raccoon")
+    orden = sorted(listado, key=lambda h:["name"])
+    for i, h in enumerate(orden):
+        if h["name"] in ["The Thing", "Rocket Raccoon"]:
+            print(f"{h['name']}: posición {i+1}")
+
+# listado villanos
 def lista_villanos(listado):
-    aux1 = Stack()
-    for i in range(0, len(listado)):
-        obj = listado[i]
-        if listado[i]["is_villain"] == True:
-            aux1.push(obj["name"])
-    print(f"Listado de superhéroes:")
-    print(aux1.show())
+    print("villanos:")
+    for h in listado:
+        if h["is_villain"]:
+            print(f"{h["name"]}")
 
-def villanos_1980(self):
-    aux2 = Queue()
-    for i in range(0, len(self)):
-        obj = self[i]
-        if self[i]["is_villain"] == True and self[i]["first_appearance"] <= 1980:
-            aux2.arrive(obj["name"])
-            aux2.arrive(obj["first_appearance"])
-    print(f"Listado de superhéroes cuya primera aparicion fue antes o durante 1980:")
-    print(aux2.show())
+# villanos pre-1980
+def villanos_1980(listado):
+    print("villanos pre-1980:")
+    cola = Queue()
+    for h in listado:
+        if h["is_villain"]:
+            cola.arrive(h) # carga
+    
+    print(f"total villanos en cola: {cola.size()}")
+    for p in range(cola.size()):
+        villano = cola.move_to_end() # recorre y filtra
+        if villano["first_appearance"] < 1980:
+            print(f"{villano['name']} ({villano['first_appearance']})")
 
-# def superheroes_bl_g_my_w(listado):
+# heroes que comienzan con 'bl' 'g' 'my' y 'w'
+def filtro_prefijo(listado):
+    print("heroes bl,g,my,w")
+    prefijos = ("Bl", "G", "My", "W")
+    for h in listado:
+        if h["name"].startswith(prefijos):
+            print(f"{h['name']}")
 
-# def nombres_reales_pjs(listado):
+# nombres reales
+def nombres_reales_pjs(listado):
+    print("orden nombre real")
+    orden = sorted(listado, key=lambda h: h["real_name"] or "") # "" a falta de nombre en lista
+    for h in orden:
+        print(f"{h['real_name']}, ({h['name']})")
 
-# def superheroes_aparicion(listado):
+# orden aparicion
+def superheroes_aparicion(listado):
+    print("orden fecha aparicion:")
+    orden = sorted(listado, key=lambda h: h["first_appearance"])
+    for h in orden:
+        print(f"{h['first_appearance']}, {h['name']}")
 
-# def mod_nom_ant_lang(listado):
+# modificar ant man
+def mod_nom_ant_lang(listado):
+    print("modificar nombre real antman")
+    for h in listado:
+        if h["name"] == "Ant Man":
+            h["real_name"] = "Scott Lang"
+            print(f"nombre real actualizado a {h['real_name']}")
+            return
+        if h["real_name"] is None:
+            print(f"Sin nombre real: {h['name']}")
+    print("Ant Man no encontrado")
 
-# def bio_tts(listado):
+# filtrado bio palabras "time-travelling" y "suit"
+def filtrar_bio(listado):
+    print("personaes con 'time-travelling' o 'suit' en bio")
+    for h in listado:
+        if "time-travelling" in h["short_bio"] or "suit" in h["short_bio"]:
+            print(f"{h['name']}: {h['short_bio']}")
 
-# def del_ele_zem(listado):
+# eliminar electro y baron zemo de la base
+def del_pj(listado):
+    print("eliminar electro y baron zemo")
+    a_eliminar = ["Electro", "Baron Zemo"]
+    for nombre in a_eliminar:
+        for i, h in enumerate(listado):
+            if h["name"] == nombre:
+                eliminado = listado.pop(i)
+                print(f"Eliminado: {eliminado['name']} / "
+                    f"Alias: {eliminado['alias']} / "
+                    f"Nombre real: {eliminado['real_name']} / "
+                    f"Aparicion: {eliminado['first_appearance']}")
+                break
+        else:
+            print(f"'{nombre}' no estaba en la lista")
 
-#orden_alfabetico_asc(superheroes)
+##############
+
+orden_alfabetico_asc(superheroes)
+busqueda_thing_raccoon(superheroes)
 lista_villanos(superheroes)
 villanos_1980(superheroes)
-busqueda_thing_raccoon(superheroes)
+filtro_prefijo(superheroes)
+nombres_reales_pjs(superheroes)
+superheroes_aparicion(superheroes)
+mod_nom_ant_lang(superheroes)
+filtrar_bio(superheroes)
+del_pj(superheroes)
