@@ -166,7 +166,7 @@ class Graph(List):
                 if pos is not None:
                     if costo_nodo_actual + edge.weight < no_visited.elements[pos][0]:
                         no_visited.elements[pos][1][2] = vertex[1][0]
-                        no_visited.elements[pos][0] = costo_nodo_actual + edge.weight
+                    #    no_visited.elements[pos][0] = costo_nodo_actual + edge.weight
                         no_visited.change_priority(pos, costo_nodo_actual + edge.weight)
         return path                    
 
@@ -239,6 +239,51 @@ class Graph(List):
 
         result = __exist_path(self, origin, destination)
         return result
+
+    def camino_mas_corto(self, origin, destination):
+        """Camino más corto con dijkstra. Devuelve (lista de vértices, costo)
+        o (None, None) si no hay camino."""
+        pila = self.dijkstra(origin)
+        datos = {}                                          # nombre -> (costo, anterior)
+        while pila.size() > 0:
+            nombre, costo, anterior = pila.pop()
+            datos[nombre] = (costo, anterior)
+        if destination not in datos or datos[destination][0] == float('inf'):
+            return None, None
+        camino = []
+        actual = destination
+        while actual is not None:
+            camino.append(actual)
+            actual = datos[actual][1]
+        camino.reverse()
+        return camino, datos[destination][0]
+
+    def prim(self, origin=None):
+        """Prim con cola de prioridad (montículo mínimo), como en el PDF.
+        Devuelve (bosque, peso_total) con bosque = [(padre, hijo, peso), ...]."""
+        vertices = {v.value: v for v in self}
+        if origin is None:
+            origin = self[0].value
+        en_arbol = {origin}
+        bosque = []
+        total = 0
+        cola = HeapMin()
+
+        def agregar_aristas(nombre):
+            for arista in vertices[nombre].edges:
+                if arista.destination not in en_arbol:
+                    cola.arrive((nombre, arista.destination), arista.weight)
+
+        agregar_aristas(origin)
+        while cola.size() > 0 and len(en_arbol) < len(vertices):
+            peso, (padre, hijo) = cola.attention()
+            if hijo in en_arbol:          # arista que ya apunta a un vértice del árbol
+                continue
+            en_arbol.add(hijo)
+            bosque.append((padre, hijo, peso))
+            total += peso
+            agregar_aristas(hijo)
+        return bosque, total
 
 g = Graph(is_dir=False)
 
